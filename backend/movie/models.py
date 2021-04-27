@@ -3,10 +3,12 @@ from django.db import models
 
 
 class Movie(models.Model):
-    movieCd = models.IntegerField(primary_key=True)
-    movieNm = models.CharField(max_length=20)
-    genreNm = models.CharField(max_length=10)
-    watchGradeNm = models.CharField(max_length=10)
+    title = models.CharField(max_length=20, unique=True)
+    genre = models.CharField(max_length=10)
+    runtime = models.CharField(max_length=10)
+    plot = models.TextField()
+    keywords = models.CharField(max_length=50)
+    posterUrl = models.ImageField(blank=False, null=False)
 
     watched_user = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -16,6 +18,5 @@ class Movie(models.Model):
 
 
 class WatchedUser(models.Model):
-    shop_post = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-

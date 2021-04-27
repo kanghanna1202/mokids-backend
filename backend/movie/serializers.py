@@ -4,6 +4,12 @@ from movie.models import Movie
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ('title', 'watched', 'posterUrl', 'plot')
+
+
+class MovieDetailSerializer(serializers.ModelSerializer):
     watched = serializers.SerializerMethodField()
 
     def get_watched(self, obj):
@@ -15,4 +21,4 @@ class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ('movieCd', 'movieNm', 'genreNm', 'watchGradeNm', 'watched')
+        fields = ('title', 'plot', 'genre', 'keywords', 'runtime', 'watched', 'posterUrl')
