@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = my_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = []
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'movie',
     'user',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -167,6 +168,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'user.User'
+
+CRONJOBS = [
+    ('* * * * *', 'movie.cron.hello_every_minute', '>> /tmp/log/cron_test.log'),
+]
 
 
 # Internationalization
