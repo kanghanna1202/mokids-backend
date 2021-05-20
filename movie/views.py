@@ -23,8 +23,8 @@ def movie_list(request):
 @permission_classes([IsAuthenticated])
 def movie_detail_list(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
-
-    serializer = MovieDetailSerializer(movie)
+    context = {"request": request}
+    serializer = MovieDetailSerializer(movie, context=context)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
