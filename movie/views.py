@@ -10,7 +10,7 @@ from movie.serializers import MovieSerializer, MovieDetailSerializer
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def movie_list(request):
-    movie = Movie.objects.order_by('?')[:10]
+    movie = Movie.objects.order_by('?')[:5]
     serializer = MovieSerializer(movie, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -34,7 +34,7 @@ def movie_detail_list(request, pk):
 @permission_classes([IsAuthenticated])
 def movie_genre_list(request, genre):
     try:
-        movie = Movie.objects.filter(genre=genre)
+        movie = Movie.objects.filter(genre__icontains=genre)
     except Movie.DoesNotExist:
         return Response({'error': {
             'code': 404,
